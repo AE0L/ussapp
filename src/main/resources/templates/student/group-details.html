@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP Home">
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Create Account, USSAPP Sign in">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #eee;">
+    <div class="topnav">
+        <div class="header">
+            <h1>
+                <span>
+                    <a th:href="@{professor-home}">
+                        <img alt="" src="images/deficon.png" width="48" height="48">USSAPP
+                    </a>
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="newAcc-container">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="student-home">
+                        <img alt="" src="images/usericon.png" width="50" height="50">
+                        <br>
+                        <span th:text="${session.student.username}"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-class-page">
+                        <img alt="" src="images/group.png" width="35" height="35">
+                        <span>Classes</span>
+                    </a>
+                </li>
+
+                <br><br><br><br><br><br><br>
+
+                <li>
+                    <a href="about">
+                        <img alt="" src="images/about.png" width="35" height="35">
+                        <span>About</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/logout">
+                        <img alt="" src="images/logout.png" width="35" height="35">
+                        <span>Log-out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="Pracc-content">
+            <div class="contitle">
+                <h1 th:text="${session.group.name}"></h1>
+
+                <br>
+
+                <h2>Members</h2>
+
+                <div class="PrGroups">
+                    <div th:each="member : ${session.group.groupMembers}">
+                        <label th:text="${member.student.lastName + ', ' + member.student.firstName}"></label>
+                    </div>
+
+                    <br>
+                    <hr>
+
+                    <div th:if="${overdue}">
+                        <span>Overdue</span>
+                    </div>
+
+                    <br>
+
+                    <div th:if="${session.group.proposal.file} == null">
+                        <span>No submissions yet</span>
+                        <br>
+                        <a th:href="@{student-submit-file}">
+                            <button>Submit a proposal now</button>
+                        </a>
+                    </div>
+
+                    <div th:if="${session.group.proposal.file} != null" th:object="${session.group.proposal}">
+                        <h2 th:if="*{accepted}">PROPOSAL ACCEPTED</h2>
+                        <h2 th:text="*{title}"></h2>
+
+                        <span>File Name: </span>
+                        <span th:text="*{file.fileName}"></span>
+
+                        <br>
+
+                        <span>Last submission date: </span>
+                        <span th:text="*{getFormattedLastEdit()}"></span>
+
+                        <br>
+
+                        <span>Number of uploads: </span>
+                        <span th:text="*{revisions + '/' + limit}"></span>
+
+                        <br>
+
+                        <span>Deadline: </span>
+                        <span th:text="*{getFormattedDeadline()}"></span>
+
+                        <div th:if="*{accepted} == false">
+                            <div th:if="*{revisions} < *{limit}">
+                                <a th:href="@{student-submit-revision}">
+                                    <button>Submit a new revision</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div th:if="${session.group.proposal.comments.isEmpty()}">
+                        <span>No comments made yet</span>
+                    </div>
+
+                    <form action="#" th:action="@{student-submit-comment}" th:object="${form}" method="post">
+                        <textarea th:field="*{comment}" placeholder="Enter your comment here..."></textarea>
+                        <input type="submit" value="Post comment">
+                    </form>
+
+                    <div th:if="${session.group.proposal.comments.isEmpty()} == false">
+                        <div th:each="comment : ${session.group.proposal.getComments()}">
+                            <p th:text="${comment.user}"></p>
+                            <p th:text="${comment.getFormattedDate()}"></p>
+                            <p th:utext="${comment.text}"></p>
+
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

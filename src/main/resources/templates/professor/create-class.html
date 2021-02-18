@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="/images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP Home">
+    <meta name="keywords" con ame="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #eee;">
+    <div class="topnav">
+        <div class="header">
+            <h1>
+                <a th:href="@{professor-home}">
+                    <img alt="" src="/images/deficon.png" width="48" height="48">
+                    <span>USSAPP</span>
+                </a>
+            </h1>
+        </div>
+    </div>
+
+    <div class="newAcc-container">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a th:href="@{professor-home}">
+                        <img alt="" src="/images/usericon.png" width="50" height="50">
+                        <br>
+                        <span th:text="${session.professor.username}"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{professor-class-page}">
+                        <img alt="" src="/images/group.png" width="35" height="35">
+                        <span>Student</span>
+                    </a>
+                </li>
+
+                <br><br><br><br><br><br><br><br>
+
+                <li>
+                    <a th:href="@{about}">
+                        <img alt="" src="images/about.png" width="35" height="35">
+                        <span>About</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{logout}">
+                        <img alt="" src="images/logout.png" width="35" height="35">
+                        <span>Log-out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="Pracc-content">
+            <div class="contitle">
+                <form id="class-form" class="makeclass" action="#" th:action="@{professor-register-class}" th:object="${form}" method="post">
+                    <label>What is the class name</label>
+                    <br>
+                    <input name="class-name" type="text" placeholder="Input class name" th:field="*{className}" required>
+
+                    <br>
+
+                    <label>How many groups do in the class</label>
+                    <br>
+                    <input name="group-count" type="number" placeholder="Input number of groups" th:field="*{groups}" required>
+
+                    <br>
+
+                    <label>Set a deadline for the first revision</label>
+                    <br>
+                    <input name="deadline" type="datetime-local" th:field="*{deadline}" required>
+
+                    <br>
+
+                    <label>How many times can students upload per revisions</label>
+                    <br>
+                    <input name="limit" type="number" placeholder="Input number of groups" th:field="*{limit}" required>
+
+                    <br>
+
+                    <div id="proflbtn">
+                        <input type="submit" value="Create a Class">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

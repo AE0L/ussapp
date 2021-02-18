@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="images/deficon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="description" content="USSAPP" />
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Log in" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body style="background-color: #ceddd8">
+    <div class="login-container">
+        <a href="/"><img alt="" src="images/deficon.png" class="avatar" /></a>
+        <h1>Log in to your USSAPP account</h1>
+        <form class="loginboxs" action="#" th:action="@{/login-user}" th:object="${form}" method="post">
+            <p>Username</p>
+            <input type="text" name="" placeholder="Enter Username" th:field="*{username}" required />
+
+            <p>Password</p>
+            <input type="password" name="" placeholder="Enter Password" th:field="*{password}" required />
+
+            <div class="login-error" th:if="${msg != ''}">
+                <p th:text="${msg} ?: default">test</p>
+            </div>
+
+            <input type="submit" name="" value="Log in" />
+
+            <a class="#" href="signin">Don't have an account?</a>
+        </form>
+    </div>
+</body>
+
+</html>

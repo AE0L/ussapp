@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="/images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP">
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Student Account, USSAP Create Account">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #CEDDD8;">
+    <div class="createacc-container">
+        <a href="/"><img alt="" src="/images/deficon.png" class="avatar"></a>
+        <h1>Create your USSAPP account</h1>
+        <form class="createStud" th:action="@{/create-professor}" th:object="${form}" method="post">
+            <p>First Name</p>
+            <input type="text" name="" placeholder="Enter your first name" th:field="*{firstName}" required>
+            <p>Last Name</p>
+            <input type="text" name="" placeholder="Enter your last name" th:field="*{lastName}" required>
+            <p>Username</p>
+            <input type="text" name="" placeholder="Create username" th:field="*{username}" required>
+            <p>Email</p>
+            <input type="email" name="" placeholder="Enter email address" th:field="*{email}" required>
+            <p>Password</p>
+            <input type="password" name="" placeholder="Create password (8-10 characters)" th:field="*{password}" required>
+            <p>Confirm Password</p>
+            <input type="password" name="" placeholder="Confirm password" th:field="*{rePassword}" required>
+            <br>
+            <input type="submit" name="" value="Create Account">
+            <a class="#" href="login"><input type="button" name="" value="Already have an account?"></a>
+        </form>
+    </div>
+    <div style="margin-bottom: 70px;"></div>
+</body>
+
+</html>

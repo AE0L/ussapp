@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP Home">
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Create Account, USSAPP Sign in">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #eee;">
+    <div class="topnav">
+        <div class="header">
+            <h1>
+                <span>
+                        <a th:href="@{professor-home}"><img alt="" src="images/deficon.png" width="48"
+                                height="48">USSAPP</a>
+                    </span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="newAcc-container">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a th:href="@{professor-home}">
+                        <img alt="" src="images/usericon.png" width="50" height="50">
+                        <br>
+                        <span th:text="${session.professor.username}"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{professor-class-page}">
+                        <img alt="" src="images/group.png" width="35" height="35">
+                        <span>Student</span>
+                    </a>
+                </li>
+
+                <br><br><br><br><br><br><br><br>
+
+                <li>
+                    <a href="USSAPP-about.html">
+                        <img alt="" src="images/about.png" width="35" height="35">
+                        <span>About</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{logout}">
+                        <img alt="" src="images/logout.png" width="35" height="35">
+                        <span>Log-out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="Pracc-content">
+            <div class="contitle">
+                <h2 th:text="${class.name}"></h2>
+                <h4 th:text="${class.code}"></h4>
+
+                <hr>
+
+                <h3>Groups</h3>
+
+                <br>
+
+                <div class="PrGroups">
+                    <div th:each="group : ${groups}">
+                        <a th:href="@{professor-get-group-details/{id}(id=${group.code})}">
+                            <label th:text="${group.name}"></label>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP Home">
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Create Account, USSAPP Sign in">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #eee;">
+    <div class="topnav">
+        <div class="header">
+            <h1><span><a href="/"><img alt="" src="images/deficon.png" width="48" height="48">USSAPP</a></span></h1>
+        </div>
+    </div>
+    <div class="newAcc-container">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="#"><img alt="" src="images/usericon.png" width="50" height="50"><br><span th:text="${session.student.username}"></span></a>
+                </li>
+                <li><a th:href="@{student-class-page}"><span><img alt="" src="images/group.png" width="35"
+                                    height="35">Classes</span></a></li>
+                <br><br><br><br><br><br><br>
+                <li><a href="about"><span><img alt="" src="images/about.png" width="35" height="35">About</span></a>
+                </li>
+                <li><a th:href="@{logout}"><span><img alt="" src="images/logout.png" width="35"
+                                    height="35">Log-out</span></a></li>
+            </ul>
+        </div>
+        <div class="Pracc-content">
+            <div class="Stacc-content">
+                <div class="contitle-ssub">
+                    <h3>Create Submission</h3>
+
+                    <br>
+
+                    <form class="Stusubmission-form" method="post" enctype="multipart/form-data" action="#" th:action="@{student-submit-proposal}" th:object="${form}">
+                        <label>Proposal Title</label><br>
+                        <input type="text" name="" th:field="*{title}" required><br><br>
+
+                        <div>
+                            <div class="schoosefile">
+                                <label for="file">Choose file to upload</label>
+                                <input type="file" id="file" name="file" th:field="*{file}" multiple>
+                            </div>
+
+                            <div class="Stusubmission-form">
+                                <input type="submit" name="" value="Submit project">
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

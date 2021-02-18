@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>USSAPP</title>
+    <link rel="icon" href="images/deficon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="USSAPP Home">
+    <meta name="keywords" content="Online Project Submission, PUP, Submission platform, Student, Professor, USSAPP Create Account, USSAPP Sign in">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #eee;">
+    <div class="topnav">
+        <div class="header">
+            <h1>
+                <span>
+                        <a th:href="@{professor-home}"><img alt="" src="images/deficon.png" width="48"
+                                height="48">USSAPP</a>
+                    </span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="newAcc-container">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a th:href="@{professor-home}">
+                        <img alt="" src="images/usericon.png" width="50" height="50">
+                        <br>
+                        <span th:text="${session.professor.username}"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{professor-class-page}">
+                        <img alt="" src="images/group.png" width="35" height="35">
+                        <span>Student</span>
+                    </a>
+                </li>
+
+                <br><br><br><br><br><br><br><br>
+
+                <li>
+                    <a href="USSAPP-about.html">
+                        <img alt="" src="images/about.png" width="35" height="35">
+                        <span>About</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{logout}">
+                        <img alt="" src="images/logout.png" width="35" height="35">
+                        <span>Log-out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="Pracc-content">
+            <div class="contitle">
+                <h1 th:text="${session.group.name}"></h1>
+                <h4 th:text="${session.group.code}"></h4>
+
+                <br>
+
+                <div class="PrGroups">
+                    <div th:if="${session.group.groupMembers.isEmpty()} == false">
+                        <div th:each="member : ${session.group.groupMembers}">
+                            <label th:text="${member.student.getName()}"></label>
+                        </div>
+                    </div>
+
+                    <div th:if="${session.group.admitList.isEmpty()} == false">
+                        <div th:each="admit : ${session.group.admitList}">
+                            <label th:text="${admit.student.getName()}"></label>
+                            <a th:href="@{/professor-admit-student/{id}(id=${admit.student.sid})}">
+                                <button>Admit</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${session.group.proposal.file} == null">
+                    <span>No submissions yet</span>
+                </div>
+
+                <div th:if="${session.group.proposal.file} != null" th:object="${session.group.proposal}">
+                    <h2 th:text="*{title}"></h2>
+
+                    <br>
+
+                    <span>Deadline: </span>
+                    <span th:text="*{getFormattedDeadline()}"></span>
+
+                    <br>
+
+                    <span>File Name: </span>
+                    <span th:text="*{file.fileName}"></span>
+
+                    <br>
+
+                    <span>Last submission date: </span>
+                    <span th:text="*{getFormattedLastEdit()}"></span>
+
+                    <br>
+
+                    <span>Number of uploads: </span>
+                    <span th:text="*{revisions + '/' + limit}"></span>
+
+                    <br>
+
+                    <div th:if="*{accepted} == false">
+                        <a th:href="@{professor-accept-proposal}">
+                            <button>Accept proposal</button>
+                        </a>
+                    </div>
+
+                    <a th:href="@{professor-download-proposal}">
+                        <button>download proposal</button>
+                    </a>
+                </div>
+
+                <hr>
+
+                <div th:if="${session.group.proposal.comments.isEmpty()}">
+                    <span>No comments made yet</span>
+                </div>
+
+                <form action="#" th:action="@{professor-submit-comment}" th:object="${form}" method="post">
+                    <textarea th:field="*{comment}" placeholder="Enter your comment here..."></textarea>
+                    <input type="submit" value="Post comment">
+                </form>
+
+                <div th:if="${session.group.proposal.comments.isEmpty()} == false">
+                    <div th:each="comment : ${session.group.proposal.getComments()}">
+                        <p th:text="${comment.user}"></p>
+                        <p th:text="${comment.getFormattedDate()}"></p>
+                        <p th:utext="${comment.text}"></p>
+
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
